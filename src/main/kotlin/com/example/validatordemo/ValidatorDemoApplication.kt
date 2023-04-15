@@ -43,13 +43,24 @@ fun main(args: Array<String>) {
         .body(Body.from(json)).build()
     
     try {
-        val validate = requestValidator.validate(request)
+        requestValidator.validate(request)
+        println("Request is valid!")
     } catch (e: ValidationException) {
         val results = e.results()
-        println("results.isValid=${results.isValid}")
-        for (item in results.items()) {
-            println("${item.dataCrumbs()} message=${item.message()}")
+        if (!results.isValid) {
+            for (item in results.items()) {
+                val splits = item.dataCrumbs().split(".")
+                val fieldName = if (splits.size > 1) {
+                    splits.subList(1, splits.size).joinToString(".")
+                } else {
+                    ""
+                }
+                if (fieldName.isNotBlank()) {
+                    println("${item.message()} Affected field: '${fieldName}'.")
+                } else {
+                    println(item.message())
+                }
+            }       
         }
-        e.printStackTrace()
     }
 }
