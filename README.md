@@ -1,6 +1,10 @@
 # validator-demo
 
-ChatGPT Q&A:
+This is a Java/Kotlin code base that show case how you can use the openapi4j library to valdiate an incoming HTTP request's request body against an OAS 3.0 spec
+
+Furthermore, once this code has been turned into a "server" listening on say localhost:8080, we can point a Kong API gateway to send traffic to it via a Kong plugin
+
+# ChatGPT Q&A to create a Kong plugin for this
 
 ## Question
 
