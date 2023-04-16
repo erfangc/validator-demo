@@ -18,6 +18,7 @@ fun main(args: Array<String>) {
     val api3 = OpenApi3Parser().parse(spec, true)
     val requestValidator = RequestValidator(api3)
     
+    // Pretend this is the request body we receive from the API caller
     val json = """
         {
           "id": 10,
@@ -47,6 +48,7 @@ fun main(args: Array<String>) {
         println("Request is valid!")
     } catch (e: ValidationException) {
         val results = e.results()
+        // this is an example of the kind of error we want to return to the caller to assist them wit understanding what's wrong
         if (!results.isValid) {
             for (item in results.items()) {
                 val splits = item.dataCrumbs().split(".")
